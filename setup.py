@@ -10,9 +10,6 @@ setup(
     license='LICENSE',
     description='Python Slack log handler using webhook',
     long_description=open('README.md').read(),
-    install_requires=[
-        'requests >= 2.5.1'
-    ],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

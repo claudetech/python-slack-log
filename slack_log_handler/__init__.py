@@ -1,5 +1,10 @@
 import logging
-import requests
+import json
+
+try:
+    from urllib.request import urlopen, Request
+except ImportError:
+    from urllib2 import urlopen, Request
 
 
 class SlackLogHandler(logging.Handler):
@@ -12,7 +17,8 @@ class SlackLogHandler(logging.Handler):
         logging.CRITICAL: ':boom:'
     }
 
-    def __init__(self, webhook_url, channel=None, username=None, emojis=None, format='[%(levelname)s] [%(asctime)s] [%(name)s] - %(message)s'):
+    def __init__(self, webhook_url, channel=None, username=None, emojis=None,
+                 format='[%(levelname)s] [%(asctime)s] [%(name)s] - %(message)s'):
         logging.Handler.__init__(self)
         self.webhook_url = webhook_url
         self.channel = channel
@@ -35,7 +41,10 @@ class SlackLogHandler(logging.Handler):
 
     def emit(self, record):
         try:
+            req = Request(self.webhook_url)
+            req.add_header('Content-Type', 'application/json')
+
             content = self._make_content(record)
-            requests.post(self.webhook_url, json=content)
+            urlopen(req, json.dumps(content))
         except:
             self.handleError(record)
