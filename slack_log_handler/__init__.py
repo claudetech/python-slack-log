@@ -45,6 +45,6 @@ class SlackLogHandler(logging.Handler):
             req.add_header('Content-Type', 'application/json')
 
             content = self._make_content(record)
-            urlopen(req, json.dumps(content))
+            urlopen(req, json.dumps(content).encode("utf-8"))
         except:
             self.handleError(record)
