@@ -31,3 +31,13 @@ logger.addHandler(slack_handler)
 
 logger.error('Oh my god, an error occurred!')
 ```
+
+## Troubleshooting
+
+On Linux, if you get an error of this kind,
+
+```
+SSL: CERTIFICATE_VERIFY_FAILED
+```
+
+make sure the `ca-certificates` package (or whatever package your distribution uses instead) is installed.
