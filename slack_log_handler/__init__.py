@@ -27,11 +27,14 @@ class SlackLogHandler(logging.Handler):
         self.formatter = logging.Formatter(format)
 
     def _make_content(self, record):
+        icon_emoji = getattr(record, 'slack_icon', self.emojis[record.levelno])
         content = {
             'text': self.format(record),
-            'icon_emoji': self.emojis[record.levelno]
+            'icon_emoji': icon_emoji
         }
-        if self.username:
+        if hasattr(record, 'slack_username'):
+            content['username'] = getattr(record, 'slack_username')
+        elif self.username:
             content['username'] = self.username
         else:
             content['username'] = "{0} - {1}".format(record.module, record.name)
