@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='slack_log_handler',
-    version='0.2.2',
+    version='0.3.0',
     author='Daniel Perez',
     author_email='daniel@claudetech.com',
     packages=['slack_log_handler'],
